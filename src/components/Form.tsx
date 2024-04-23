@@ -1,8 +1,13 @@
-import { useState, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent, Dispatch } from 'react'
 import {categories} from '../data/categories'
 import { Activity } from '../types'
+import { ActivityActions } from '../reducers/activity-reducer'
 
-export default function Form() {
+type FormProps = {
+    dispatch: Dispatch<ActivityActions>
+  }
+
+export default function Form( {dispatch} : FormProps) {
     const [activity, setActivity] = useState<Activity>({
         category: 1,
         name: '',
@@ -24,6 +29,7 @@ export default function Form() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        dispatch({type:'SAVE_ACTIVITY', payload: {newActivity: activity}})
     }
 
     return (
@@ -58,7 +64,7 @@ export default function Form() {
                 onChange={handleChange} />
             </div>
 
-            <input type="submit" className='bg-gray-800 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white disabled:bg-gray-200'
+            <input type="submit" className='bg-gray-800 hover:bg-gray-900 cursor-pointer w-full p-2 font-bold uppercase text-white disabled:bg-gray-200'
             value={`Save ${activity.category === 1 ? ' Food' : 'Workout'}`} 
             disabled={!isValidActivity()} />
 
