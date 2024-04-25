@@ -2,6 +2,7 @@ import { useReducer, useEffect } from 'react'
 import Form from './components/Form'
 import {activityReducer, initialState} from './reducers/activity-reducer'
 import ActivityList from './components/ActivityList';
+import CalorieTracker from './components/CalorieTracker';
 
 function App() {
   const [state, dispatch] = useReducer(activityReducer, initialState)
@@ -13,9 +14,9 @@ function App() {
   return (
     <>
       <header className="bg-lime-600 py-3">
-        <div className="max-w-4xl mx-auto flex justify-between">
+        <div className="max-w-4xl mx-auto flex justify-between items-center">
           <h1 className="text-center text-lg pl-3 font-bold text-white uppercase">Calorie Tracker</h1>
-          <button className="bg-gray-800 hover:bg-gray-900 p-2 font-bold uppercase text-white cursor-pointer disabled:opacity-10" disabled={state.activities.length <= 0} onClick={ () => dispatch({type:'RESTART_APP'})}>
+          <button className="bg-gray-800 hover:bg-gray-900 p-2 mr-2 font-bold uppercase text-white cursor-pointer disabled:opacity-10" disabled={state.activities.length <= 0} onClick={ () => dispatch({type:'RESTART_APP'})}>
               Restart App
           </button>
         </div>
@@ -27,7 +28,7 @@ function App() {
       </section>
       <section className='bg-gray-800 py-10'>
         <div className='max-w-4xl mx-auto'>
-            
+            <CalorieTracker activities={state.activities} />
         </div>
       </section>
       <section className='p-10 mx-auto max-w-4xl'>
